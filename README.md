@@ -15,7 +15,7 @@ This project walks through the full lifecycle — from **discovery** to **demo h
 
 ---
 
-## 🧱 Architecture (High Level)
+## 🧱 Architecture 
 
 ```mermaid
 flowchart LR
