@@ -4,15 +4,14 @@
 
 > **Redaction Statement:**  
 > This repository intentionally contains **no secrets, no IP addresses, no hostnames, and no tenant-identifying information**.  
-> All values are placeholders (e.g., `<DATTO_API_KEY>`, `<CUSTOMER_TENANT>`) and MUST be substituted securely at run time via environment variables or a secret manager.
+> All values are placeholders (e.g., `<DATTO_API_KEY>`, `<CUSTOMER_TENANT>`) and must be substituted securely at runtime (environment variables or secret manager).
 
 ---
 
 ## 🎯 Purpose
 
-A **clean, production-ready** repository documenting a real **pre-sales activity** — showing a Datto customer how **Grafana** can visualize backup and recovery insights from the **Datto DRaaS/BCDR SaaS** platform.
-
-This project covers the lifecycle end-to-end — from **discovery through demo** — without leaking sensitive data.
+A **production-ready** documentation repo for a **pre-sales activity** showing a Datto customer how **Grafana** visualizes DRaaS and BCDR backup insights securely and clearly.  
+This project walks through the full lifecycle — from **discovery** to **demo handover** — while remaining fully redacted and safe to publish.
 
 ---
 
@@ -20,16 +19,16 @@ This project covers the lifecycle end-to-end — from **discovery through demo**
 
 ```mermaid
 flowchart LR
-    A["Datto DRaaS / BCDR SaaS<br/>(Cloud API)"]
-    B["Integration Collector<br/>(PowerShell / Bash)"]
-    C["Metrics Store<br/>(Local JSON or Data Lake)"]
-    D["Grafana<br/>(Dashboard & Alerts)"]
-    E["Customer Stakeholders"]
+    A[Datto DRaaS / BCDR SaaS API]
+    B[Integration Collector - PowerShell or Bash]
+    C[Metrics Store - JSON file or Datalake]
+    D[Grafana - Dashboards and Alerts]
+    E[Customer Stakeholders]
 
-    A -->|Pull metrics (HTTPS)| B
-    B -->|Normalize & write JSON| C
+    A -->|Pull metrics via HTTPS| B
+    B -->|Normalize and write JSON| C
     C -->|Grafana Data Source| D
-    D -->|Share read-only| E
+    D -->|Share read-only dashboards| E
 ```
 
 ---
@@ -43,23 +42,23 @@ sequenceDiagram
     participant API as Datto API
     participant G as Grafana
 
-    C->>SE: Discovery & goals
+    C->>SE: Discovery and goals
     SE->>SE: Design integration (redacted config)
-    SE->>API: Retrieve metrics (secure, via token)
-    SE->>G: Provision data source & dashboard
-    G-->>C: Demo & feedback
+    SE->>API: Retrieve metrics (secure via token)
+    SE->>G: Provision data source and dashboard
+    G-->>C: Demo and feedback
     SE->>SE: Handover documentation
-    SE->>C: Closeout & next steps
+    SE->>C: Closeout and next steps
 ```
 
 **Lifecycle Checklist**
-- **Discovery** → target personas, success criteria, use cases  
-- **Design** → architecture, data model, refresh cadence, security  
-- **Build** → scripts, data source, dashboards, alerts  
-- **Test** → sample data, alert dry-runs, access checks  
-- **Demo** → curated walkthrough, scenario narration  
-- **Handover** → docs + runbook + cleanup  
-- **Closeout** → decisions, risks, next steps  
+- **Discovery** → identify personas, use cases, and success criteria  
+- **Design** → define architecture, data flow, security approach  
+- **Build** → create collector scripts, data sources, dashboards  
+- **Test** → validate data integrity and access  
+- **Demo** → guided walkthrough of metrics and insights  
+- **Handover** → share documentation and runbook  
+- **Closeout** → gather feedback and propose next steps  
 
 ---
 
@@ -71,7 +70,7 @@ sequenceDiagram
    cd datto-grafana-presales
    ```
 
-2. Export environment variables (never hardcode):
+2. Set environment variables (never hardcode secrets):
    ```bash
    export DATTO_API_BASE_URL="https://api.datto.example"
    export DATTO_API_KEY="<redacted>"
@@ -89,7 +88,7 @@ sequenceDiagram
    bash ./scripts/push_metrics_to_grafana.sh ./metrics.json
    ```
 
-5. Follow the [RUNBOOK.md](RUNBOOK.md) for demo flow and validation.
+5. Review the dashboard and follow the [RUNBOOK.md](RUNBOOK.md) for demo guidance.
 
 ---
 
@@ -114,17 +113,17 @@ sequenceDiagram
 
 ---
 
-## ✅ Quality & Compliance
+## ✅ Quality and Compliance
 
 - ✅ No secrets, IPs, or tenant identifiers  
-- 🔐 Environment variables used for all credentials  
-- 🧩 Redaction badge + internal validation  
-- 🧰 Idempotent, demo-safe scripts  
-- 🗂️ Documentation aligned with enterprise handover standards  
+- 🔐 All credentials managed via environment variables  
+- 🧩 Redaction badge confirms compliance  
+- 🧰 Idempotent and demo-safe scripts  
+- 📄 Documentation aligned with enterprise handover standards  
 
 ---
 
-> Example lineage (for context only):  
+> Example lineage (for context):  
 > “Microsoft Form → SharePoint → Power Automate → Entra ID → Conditional Access”  
-> has been replaced with  
+> replaced with  
 > **“Datto DRaaS / BCDR → Integration Collector → Grafana”** for this pre-sales showcase.
