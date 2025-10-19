@@ -1,30 +1,40 @@
-# Grafana × Datto DRaaS/BCDR Pre‑Sales Demo 📊🛡️
+# Grafana × Datto DRaaS/BCDR Pre-Sales Demo 📊🛡️
 
 ![Redaction](https://img.shields.io/badge/REDACTED-no%20secrets%2C%20no%20IPs%2C%20no%20tenant%20info-brightgreen?style=for-the-badge)
 
-> **Redaction Statement:** This repository intentionally contains **no secrets, no IP addresses, no hostnames, and no tenant-identifying information**. All values are placeholders (e.g., `<DATTO_API_KEY>`, `<CUSTOMER_TENANT>`) and MUST be substituted securely at run time (environment variables or secret manager).
+> **Redaction Statement:**  
+> This repository intentionally contains **no secrets, no IP addresses, no hostnames, and no tenant-identifying information**.  
+> All values are placeholders (e.g., `<DATTO_API_KEY>`, `<CUSTOMER_TENANT>`) and MUST be substituted securely at run time via environment variables or a secret manager.
+
+---
 
 ## 🎯 Purpose
 
-A **clean, production-ready** repo you can `git init` and push, documenting a real **pre-sales activity**: showing a Datto customer how **Grafana** can visualize backups/BCDR status and trends from the **Datto DRaaS/BCDR SaaS** tool.
+A **clean, production-ready** repository documenting a real **pre-sales activity** — showing a Datto customer how **Grafana** can visualize backup and recovery insights from the **Datto DRaaS/BCDR SaaS** platform.
 
-This repo covers the lifecycle end-to-end—from discovery through demo—without leaking sensitive details.
+This project covers the lifecycle end-to-end — from **discovery through demo** — without leaking sensitive data.
 
-## 🧱 Architecture (high level)
+---
+
+## 🧱 Architecture (High Level)
 
 ```mermaid
 flowchart LR
-    A[Datto DRaaS/BCDR SaaS
-(Cloud API)] -->|pull metrics (HTTPS)| B[Integration Collector
-(PowerShell/Bash)]
-    B -->|normalize & write JSON| C[Metrics Store
-(local JSON file or Datalake)]
-    C -->|Grafana Data Source| D[Grafana
-(Dashboard & Alerts)]
-    D -->|share read-only| E[Customer Stakeholders]
+    A["Datto DRaaS / BCDR SaaS<br/>(Cloud API)"]
+    B["Integration Collector<br/>(PowerShell / Bash)"]
+    C["Metrics Store<br/>(Local JSON or Data Lake)"]
+    D["Grafana<br/>(Dashboard & Alerts)"]
+    E["Customer Stakeholders"]
+
+    A -->|Pull metrics (HTTPS)| B
+    B -->|Normalize & write JSON| C
+    C -->|Grafana Data Source| D
+    D -->|Share read-only| E
 ```
 
-### 🔁 Lifecycle Stages
+---
+
+## 🔁 Lifecycle Stages
 
 ```mermaid
 sequenceDiagram
@@ -32,71 +42,89 @@ sequenceDiagram
     participant SE as Solutions Engineer
     participant API as Datto API
     participant G as Grafana
-    C->>SE: Discovery & Goals
+
+    C->>SE: Discovery & goals
     SE->>SE: Design integration (redacted config)
-    SE->>API: Retrieve metrics (secure, token via env)
-    SE->>G: Provision datasource & dashboard
+    SE->>API: Retrieve metrics (secure, via token)
+    SE->>G: Provision data source & dashboard
     G-->>C: Demo & feedback
-    SE->>SE: Handover & docs
+    SE->>SE: Handover documentation
     SE->>C: Closeout & next steps
 ```
 
-**Stages checklist**
-- **Discovery** → target personas, success criteria, use cases
-- **Design** → architecture, data model, refresh cadence, security
-- **Build** → scripts, datasource, dashboards, alerts
-- **Test** → sample data load, alert dry-runs, access checks
-- **Demo** → curated walkthrough, scenario narrations
-- **Handover** → runbook + docs + cleanup guidance
-- **Closeout** → decisions, risks, and recommended next steps
+**Lifecycle Checklist**
+- **Discovery** → target personas, success criteria, use cases  
+- **Design** → architecture, data model, refresh cadence, security  
+- **Build** → scripts, data source, dashboards, alerts  
+- **Test** → sample data, alert dry-runs, access checks  
+- **Demo** → curated walkthrough, scenario narration  
+- **Handover** → docs + runbook + cleanup  
+- **Closeout** → decisions, risks, next steps  
 
-## 🚀 Getting Started (safe demo)
+---
 
-1. Clone this repo and `cd` into it.
-2. Populate environment variables (no hardcoded values):
-   - `DATTO_API_BASE_URL` (e.g., `https://api.datto.example`)
-   - `DATTO_API_KEY` (secure token) **Do not commit.**
-   - `GRAFANA_URL` (e.g., `https://grafana.example`)
-   - `GRAFANA_API_TOKEN` (Grafana service account) **Do not commit.**
-3. Run a mock pull to generate local JSON metrics:
+## 🚀 Getting Started (Safe Demo)
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/berkeleyo/datto-grafana-presales.git
+   cd datto-grafana-presales
+   ```
+
+2. Export environment variables (never hardcode):
+   ```bash
+   export DATTO_API_BASE_URL="https://api.datto.example"
+   export DATTO_API_KEY="<redacted>"
+   export GRAFANA_URL="https://grafana.example"
+   export GRAFANA_API_TOKEN="<redacted>"
+   ```
+
+3. Run the collector:
    ```bash
    pwsh -File ./scripts/Get-DattoBcdrMetrics.ps1 -OutFile ./metrics.json
    ```
-4. Push datasource & dashboard into Grafana:
+
+4. Push metrics to Grafana:
    ```bash
    bash ./scripts/push_metrics_to_grafana.sh ./metrics.json
    ```
-5. Import/verify the dashboard in Grafana and walk through the **RUNBOOK.md**.
 
-> See `docs/ARCHITECTURE.md` and `docs/SECURITY.md` for deeper details.
+5. Follow the [RUNBOOK.md](RUNBOOK.md) for demo flow and validation.
+
+---
 
 ## 📂 Repository Structure
 
 ```
 .
-├─ README.md
-├─ RUNBOOK.md
-├─ .gitignore
-├─ docs/
-│  ├─ OVERVIEW.md
-│  ├─ ARCHITECTURE.md
-│  ├─ CUTOVER_CHECKLIST.md
-│  ├─ ROLLBACK.md
-│  └─ SECURITY.md
-└─ scripts/
-   ├─ Get-DattoBcdrMetrics.ps1
-   ├─ push_metrics_to_grafana.sh
-   ├─ grafana-dashboard.json
-   └─ grafana-datasource.json
+├── README.md
+├── RUNBOOK.md
+├── docs/
+│   ├── OVERVIEW.md
+│   ├── ARCHITECTURE.md
+│   ├── CUTOVER_CHECKLIST.md
+│   ├── ROLLBACK.md
+│   └── SECURITY.md
+└── scripts/
+    ├── Get-DattoBcdrMetrics.ps1
+    ├── push_metrics_to_grafana.sh
+    ├── grafana-dashboard.json
+    └── grafana-datasource.json
 ```
-
-## ✅ Quality & Redaction
-
-- **No** secrets, tenants, IPs, or org identifiers.
-- All configuration via **environment variables** or secret manager.
-- Scripts are **idempotent** where practical and **read-only by default**.
-- Copy/paste ready for a real pre-sales walkthrough.
 
 ---
 
-> Example pattern adapted: “Microsoft Form → SharePoint → Power Automate → Entra ID → Conditional Access (time-bound access)” — replaced with **Datto DRaaS/BCDR → Integration Collector → Grafana** for this demo.
+## ✅ Quality & Compliance
+
+- ✅ No secrets, IPs, or tenant identifiers  
+- 🔐 Environment variables used for all credentials  
+- 🧩 Redaction badge + internal validation  
+- 🧰 Idempotent, demo-safe scripts  
+- 🗂️ Documentation aligned with enterprise handover standards  
+
+---
+
+> Example lineage (for context only):  
+> “Microsoft Form → SharePoint → Power Automate → Entra ID → Conditional Access”  
+> has been replaced with  
+> **“Datto DRaaS / BCDR → Integration Collector → Grafana”** for this pre-sales showcase.
