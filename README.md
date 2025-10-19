@@ -123,7 +123,3 @@ sequenceDiagram
 
 ---
 
-> Example lineage (for context):  
-> “Microsoft Form → SharePoint → Power Automate → Entra ID → Conditional Access”  
-> replaced with  
-> **“Datto DRaaS / BCDR → Integration Collector → Grafana”** for this pre-sales showcase.
