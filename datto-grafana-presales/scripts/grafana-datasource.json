@@ -1,0 +1,11 @@
+{
+  "name": "Datto JSON (Demo)",
+  "type": "simpod-json-datasource",
+  "access": "proxy",
+  "isDefault": false,
+  "jsonData": {
+    "url": "http://localhost:9000",
+    "timeout": 60
+  },
+  "secureJsonData": {}
+}

@@ -1,0 +1,48 @@
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Editor/IDE
+.vscode/
+.idea/
+*.code-workspace
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+.env.*
+*.egg-info/
+
+# Node
+node_modules/
+
+# Logs & temp
+*.log
+logs/
+tmp/
+*.tmp
+
+# Secrets (do not commit)
+*.secrets
+*.key
+*.pem
+*.pfx
+*.cer
+*.crt
+
+# Build artifacts
+dist/
+build/
+
+# Terraform/Ansible (if used later)
+.terraform/
+*.tfstate
+*.tfstate.*
+
+# Shell history
+.bash_history
+.zsh_history
+.pshistory
